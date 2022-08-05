@@ -5,15 +5,7 @@
         </h2>
     </x-slot>
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+   
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -26,18 +18,24 @@
                         <div class="relative mb-5">
                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Title</label>
                <input type="text" name="title" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black" placeholder="Title">
+               @error('title')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
             </div>
 
             <div class="relative mb-5">
                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Content</label>
                <textarea type="text" name="content" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black" placeholder="Content">
                </textarea>
+               @error('content')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
             </div>
 
 <div class="flex">
   <div class="mb-3 w-96">
     <label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">Upload photo</label>
-    <input name="file" class="form-control
+    <input accept="image/*" name="file" required class="form-control
     block
     w-full
     px-2
@@ -52,7 +50,9 @@
     ease-in-out
     m-0
     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="formFileSm" type="file">
-  </div>
+   
+    <img id="img_preview" src="#" alt="" />
+</div>
 </div>
            
                                 <div class="form-group mt-5">
@@ -81,3 +81,12 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    formFileSm.onchange = evt => {
+  const [file] = formFileSm.files
+  if (file) {
+    img_preview.src = URL.createObjectURL(file)
+    img_preview.alt = file.name.split('.')[0]
+  }
+}
+</script>

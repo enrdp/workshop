@@ -32,7 +32,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'content' => 'required',
+            'content' => 'required'
         ]);
 
         if ($request->hasFile('file')) {
@@ -101,5 +101,14 @@ class PostController extends Controller
 
         return view('posts.update', ['post' => $post]);
         
+    }
+
+    public function destroy(Post $post)
+    {
+        $path = storage_path('app/public/post/');
+        unlink($path . $post->file_path);
+        $post->delete($post->id);
+
+        return redirect()->route('posts.index');
     }
 }

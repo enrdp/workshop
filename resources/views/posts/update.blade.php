@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Post') }}
+            {{ __('Update Post') }}
         </h2>
     </x-slot>
 
@@ -20,20 +20,24 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     
-                <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('posts.update', $post->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
-
+                        @method('PUT')
                         <div class="relative mb-5">
                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Title</label>
-               <input type="text" name="title" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black" placeholder="Title">
+               <input type="text" value="{{ $post->title }}" name="title" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black" placeholder="Title">
             </div>
 
             <div class="relative mb-5">
                <label class="absolute px-2 ml-2 -mt-3 font-medium text-gray-600 bg-white">Content</label>
                <textarea type="text" name="content" class="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black" placeholder="Content">
-               </textarea>
+               {{ $post->content}}
+            </textarea>
             </div>
 
+            <figure class="small-image">
+                        <img src="{{ asset('storage/post/'.$post->file_path) }}" alt="{{$post->title}}" />
+                    </figure>
 <div class="flex">
   <div class="mb-3 w-96">
     <label for="formFileSm" class="form-label inline-block mb-2 text-gray-700">Upload photo</label>
@@ -71,7 +75,7 @@
       active:bg-blue-800 active:shadow-lg
       transition
       duration-150
-      ease-in-out"> Save </button>
+      ease-in-out"> Update </button>
                                 </div>
                             </div>
                         </div>

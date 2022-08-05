@@ -13,9 +13,15 @@
                     <p>{{ $post->title }}</p>
                     <h3>Content</h3>
                     <p>{{ $post->content }}</p>
-                    <img src="{{ asset('storage/post/'.$post->file_path) }}" alt="{{$post->title}}"/>
+                    <figure class="resize">
+                        <img src="{{ asset('storage/post/'.$post->file_path) }}" alt="{{$post->title}}" />
+                    </figure>
+
                 </div>
+
             </div>
         </div>
     </div>
+    <a href="{{ redirect()->back()->getTargetUrl() }}" class="button-back bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+        Back</a>
 </x-app-layout>

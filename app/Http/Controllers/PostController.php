@@ -9,11 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::all();
 
-        return view('posts.index', ['posts' => $posts]);
+        $searchTerm = $request->input('search');
+
+        $searchQuery = Post::search(['title'], $searchTerm)
+            ->get();
+
+        return view('posts.index', ['posts' => $posts, 'searchs' => $searchQuery]);
     }
 
     public function show(Post $post)
